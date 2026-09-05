@@ -15,6 +15,12 @@
 
 > ⚠️ **本项目为逆向研究 / 个人学习产物，与游戏官方无关。** 请勿将本仓库或其产物用于任何商业用途。
 
+### 项目背景
+
+《Olivia》里的歌很好听，但想连续听就得不停切到曲库界面、手动一首一首点，练琴或干活的时候特别打断状态。于是做了这个东西：**让音乐自己播下去，你只管做自己的事**。面板提供队列管理和模式切换，官方 UI 手动切歌它也能自动跟随，不打架。
+
+如果你也有类似的需求或者新想法（均衡器？定时播放？歌词显示？远程控制？），**欢迎提 Issue / PR 一起折腾**。
+
 ### 功能特性
 
 - **自动连播** —— 全曲库顺序 / 随机 / 单曲循环三种模式，歌曲自然播完自动切下一首
@@ -97,6 +103,12 @@ olivia-autoplay/
 **Auto-play enhancement plugin for Olivia (Steam)** — injects a floating panel into the game's front-end for full-library continuous playback, queue management, and manual song-switch following.
 
 > ⚠️ **This is a reverse-engineering / personal-study project, not affiliated with the game's developers.** Do not use this repository or its artifacts for any commercial purpose.
+
+### Background
+
+The music in Olivia is great, but listening continuously means constantly switching back to the library screen and clicking songs one by one — really disruptive when you're practicing or working. So I built this: **let the music play itself while you focus on your own thing.** The panel gives you queue control and play modes, and it follows along when you switch songs manually in the official UI.
+
+If you have similar needs or new ideas (equalizer? timed playback? lyrics display? remote control?), **Issues and PRs are welcome** — let's build it together.
 
 ### Features
 
