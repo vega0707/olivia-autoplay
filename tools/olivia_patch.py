@@ -8,10 +8,6 @@ Olivia 自动连播 —— 前端补丁工具
     python olivia_patch.py install   把补丁包装进游戏目录（自动备份原文件）
     python olivia_patch.py restore   回滚到原始 feapp.dat
 
-应用目录默认为 Steam 安装路径，可通过环境变量覆盖：
-    set OLIVIA_APP_DIR=<你的 Olivia 安装目录>
-    python olivia_patch.py build && python olivia_patch.py install
-
 设计要点:
     * build 永远基于 backup/feapp.dat.orig，保证可重复执行、不会叠加注入
     * install 前自动备份当前现场文件，restore 可完整还原
@@ -24,15 +20,13 @@ import subprocess
 import sys
 import zipfile
 
-APP_DIR = os.environ.get(
-    "OLIVIA_APP_DIR",
-    r"C:\Program Files (x86)\Steam\steamapps\common\BSide Olivia Lin Test\0.0.9.627")
+APP_DIR = r"C:\Program Files (x86)\Steam\steamapps\common\BSide Olivia Lin Test\0.0.9.627"
 TARGET = os.path.join(APP_DIR, "resources", "feapp.dat")
 HERE = os.path.dirname(os.path.abspath(__file__))
 BACKUP = os.path.join(HERE, "backup")
 ORIG = os.path.join(BACKUP, "feapp.dat.orig")
 PATCHED = os.path.join(BACKUP, "feapp.dat.patched")
-INJECT_JS = os.path.join(os.path.dirname(HERE), "src", "autoplay.js")
+INJECT_JS = os.path.join(HERE, "src", "autoplay.js")
 ASSET_NAME = "assets/autoplay.js"
 SCRIPT_TAG = b'<script src="./assets/autoplay.js"></script>'
 EXE_NAME = "Olivia.exe"
@@ -121,6 +115,16 @@ def cmd_build():
 
     injected = False
     replaced = False
+    # 功能开关翻转（官方在构建期硬编码关闭的前端功能）
+    #   Ss: 主界面「定制演奏」（MIDI 上传）卡片   —— !o(w)&&o(Ss) 才渲染
+    #   N3: 信箱「写信」按钮                      —— hide-write: p||!N3
+    #   另：渲染条件里的 !o(w)&& 一并移除（w 为跨模块隐藏条件，离线
+    #       环境下恒真导致卡片仍不显示）
+    BUNDLE_FLAGS = [
+        (b"!o(w)&&o(Ss)", b"o(Ss)"),
+        (b"Ss=!1", b"Ss=!0"),
+        (b"N3=!1", b"N3=!0"),
+    ]
     with zipfile.ZipFile(ORIG) as zin, \
             zipfile.ZipFile(PATCHED, "w", zipfile.ZIP_DEFLATED) as zout:
         # 1) 按原顺序搬运所有条目
@@ -139,6 +143,16 @@ def cmd_build():
                         data += b"\n" + SCRIPT_TAG + b"\n"
                         injected = True
                         print("  · index.html 未找到 </body>，已追加到末尾")
+            elif info.filename.startswith("assets/") and \
+                    info.filename.endswith(".js"):
+                # 前端 bundle：翻转功能开关（断言恰好出现一次再替换）
+                for old, new in BUNDLE_FLAGS:
+                    n = data.count(old)
+                    if n == 1:
+                        data = data.replace(old, new, 1)
+                        print(f"  · {info.filename}: {old.decode()} -> {new.decode()} ✓")
+                    elif n > 1:
+                        print(f"  · {info.filename}: {old.decode()} 出现 {n} 次，跳过（需人工确认）")
             zout.writestr(info, data)
 
         # 2) 写入注入脚本（如已存在则覆盖）

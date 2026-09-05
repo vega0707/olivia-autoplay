@@ -1862,11 +1862,103 @@
             } catch (e) { }
         }, 5000);
         log('自动连播面板已就绪');
+
+        // -----------------------------------------------------------------
+        // v22.6：MIDI 生成每日上限解锁（前端侧）。
+        // midi store 的 midiDailyLimit 初始为 3，前端按钮/流程按
+        // midiGeneratedToday >= midiDailyLimit 判断是否可再生成。
+        // 这里周期性把上限提到 999；若生成计数被服务端拒绝可从日志观测。
+        // -----------------------------------------------------------------
+        setInterval(function () {
+            try {
+                var m = window.__oliviaStores && window.__oliviaStores['midi'];
+                if (!m) return;
+                if (typeof m.midiDailyLimit === 'number' && m.midiDailyLimit < 999) {
+                    m.midiDailyLimit = 999;
+                    log('MIDI 每日生成上限已解锁：' + m.midiDailyLimit);
+                }
+            } catch (e) { }
+        }, 3000);
     }).catch(function (e) {
         setDiag('fail', (e && e.message) ? String(e.message).slice(0, 40) : 'unknown');
         waitUI.setMessage('初始化失败：' + (e && e.message ? e.message : e));
         try { waitUI.showDetail((e && e.stack) ? e.stack : String(e)); } catch (e2) { }
         warn('初始化失败', e && e.message);
     });
+
+    // ---------------------------------------------------------------------
+    // v22.5：离线曲库目录导出（诊断用，一次性）。
+    // 离线目录就绪后，把完整 id/nameKey/videoUrl 元数据 POST 给本机
+    // 127.0.0.1:18080 的诊断监听器（外部工具用于建立歌曲 id ↔ 缓存
+    // 目录名的映射）。fire-and-forget，监听器不在时静默失败，最多
+    // 尝试 ~5 分钟，绝不影响宿主。
+    // ---------------------------------------------------------------------
+    (function catalogDump() {
+        var tries = 0, readyAt = 0, sent = false;
+        var timer = setInterval(function () {
+            tries++;
+            if (tries > 240) { clearInterval(timer); return; }   // ~20 分钟后放弃
+            var songs = null;
+            try { songs = offlineData.songs; } catch (e) { }
+            if (!songs || !songs.length) return;
+            if (!readyAt) readyAt = Date.now();
+            // v22.5d：扫描全部 store 的数组字段形态（不再猜测字段名）
+            var lists = {}, inventory = [];
+            try {
+                var st = window.__oliviaStores || {};
+                Object.keys(st).forEach(function (id) {
+                    var s = st[id];
+                    if (!s) return;
+                    var shape = {};
+                    Object.keys(s).forEach(function (k) {
+                        try {
+                            var v = s[k];
+                            if (Array.isArray(v)) {
+                                shape[k] = v.length;
+                                if (v.length >= 20 && v[0] && typeof v[0] === 'object' &&
+                                    ('id' in v[0])) {
+                                    lists[id + '.' + k] = v;
+                                }
+                            }
+                        } catch (e) { }
+                    });
+                    var u = null;
+                    try { u = { offline: s.isOfflineMode, user: s.username || '' }; } catch (e) { }
+                    inventory.push({ id: id, shape: shape, user: u });
+                });
+            } catch (e) { }
+            var hasLists = Object.keys(lists).length > 0;
+            if (!hasLists && Date.now() - readyAt < 180000) return;
+            if (sent) { clearInterval(timer); return; }
+            sent = true;
+            clearInterval(timer);
+            try {
+                // v22.5e：附带全部 store 的完整状态快照（研究 midi 作品存储结构）
+                var states = {};
+                try {
+                    var st2 = window.__oliviaStores || {};
+                    Object.keys(st2).forEach(function (id) {
+                        try {
+                            var s2 = st2[id];
+                            var raw = (s2 && s2.$state !== undefined)
+                                ? JSON.stringify(s2.$state)
+                                : JSON.stringify(s2);
+                            if (raw && raw.length < 4000000) states[id] = JSON.parse(raw);
+                        } catch (e) { }
+                    });
+                } catch (e) { }
+                var payload = JSON.stringify({
+                    ts: Date.now(), count: songs.length, songs: songs,
+                    lists: lists, inventory: inventory, states: states
+                });
+                fetch('http://127.0.0.1:18080/dump', {
+                    method: 'POST', mode: 'no-cors',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: payload
+                }).then(function () { log('曲库目录已导出（' + songs.length + ' 首）'); })
+                  .catch(function () { });
+            } catch (e) { }
+        }, 5000);
+    })();
 
 })();
