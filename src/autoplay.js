@@ -24,6 +24,7 @@
     var MODE_LABEL = { repeat: '顺序', shuffle: '随机', single: '单曲' };
 
     /*__CACHE_DIRS__*/   // ← build 时替换为 window.__OLIVIA_CACHE_DIRS=[...]（本地缓存曲目清单）
+    /*__INJECTED_SONGS__*/   // ← build 时替换为 window.__OLIVIA_INJECTED_SONGS=[...]（玩家上传曲目）
 
     // 从缓存目录名解析可读曲名：PlaySing_Da_Capo_Ziyun_original → Da Capo
     function parseCacheName(dir) {
@@ -252,6 +253,29 @@
                     offlineData.songs = obj.songs;
                     log('原生离线曲库已取回 ' + obj.songs.length + ' 首（cefViewQuery 直连）');
                 }
+                // v22.9：合并本地「玩家上传」曲目（视频已在 D 盘缓存目录就位）。
+                // 这些曲目官方曲库里没有，靠构建期注入的清单补上，使自动连播
+                // 与列表也能看到并播放它们。按 nameKey 去重，避免重复注入。
+                try {
+                    var injSongs = window.__OLIVIA_INJECTED_SONGS || [];
+                    if (injSongs.length) {
+                        var _have = {};
+                        offlineData.songs.forEach(function (s) {
+                            if (s && s.nameKey) _have[s.nameKey] = 1;
+                        });
+                        var _added = 0;
+                        injSongs.forEach(function (s) {
+                            if (s && s.nameKey && !_have[s.nameKey]) {
+                                offlineData.songs.push(s);
+                                _added++;
+                            }
+                        });
+                        if (_added) {
+                            log('已注入本地上传曲目 ' + _added + ' 首（曲库合计 ' +
+                                offlineData.songs.length + ' 首）');
+                        }
+                    }
+                } catch (e) { }
             } catch (e) { }
         });
     }

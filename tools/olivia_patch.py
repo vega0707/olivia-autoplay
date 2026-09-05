@@ -14,6 +14,7 @@ Olivia 自动连播 —— 前端补丁工具
     * 安装前检测 Olivia 进程，运行中则拒绝写入（文件被占用会写坏）
 """
 import hashlib
+import json
 import os
 import shutil
 import subprocess
@@ -110,6 +111,24 @@ def cmd_build():
                 repr(cache_dirs).replace("'", '"') + ";").encode()
     js = js.replace(b"/*__CACHE_DIRS__*/", manifest, 1)
     print(f"[构建] 本地缓存曲目: {len(cache_dirs)} 首（{CACHE_VIDEO_DIR}）")
+
+    # 注入玩家上传曲目元数据（Uploaded_<CODE>，与缓存目录一一对应；
+    # autoplay.js 的 ensureOfflineData() 会把它们合并进离线曲库）
+    injected_json = os.path.join(HERE, "injected_songs.json")
+    if os.path.exists(injected_json):
+        with open(injected_json, encoding="utf-8") as f:
+            songs = json.load(f)
+        payload = ("window.__OLIVIA_INJECTED_SONGS=" +
+                   json.dumps(songs, ensure_ascii=False,
+                              separators=(",", ":")) + ";").encode()
+        if b"/*__INJECTED_SONGS__*/" in js:
+            js = js.replace(b"/*__INJECTED_SONGS__*/", payload, 1)
+            print(f"[构建] 玩家上传曲目元数据: {len(songs)} 首")
+        else:
+            print("[警告] 注入脚本中找不到 /*__INJECTED_SONGS__*/ 占位符")
+    else:
+        print("[警告] 未找到 injected_songs.json，跳过玩家上传曲注入")
+
     print(f"[构建] 基础包: {ORIG}")
     print(f"[构建] 注入脚本: {INJECT_JS} ({len(js):,} 字节)")
 
