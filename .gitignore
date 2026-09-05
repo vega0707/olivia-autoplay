@@ -22,3 +22,4 @@ frida_*.txt
 .vscode/
 Thumbs.db
 .DS_Store
+docs/
