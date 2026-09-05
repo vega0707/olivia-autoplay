@@ -1,0 +1,24 @@
+# 补丁工具的本地工作产物（含游戏原始资源备份，禁止上传）
+tools/backup/
+*.dat
+*.dat.orig
+*.dat.patched
+*.dat.before_install
+*.dat.*
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# 诊断日志 / 临时文件
+*.log
+*.txt
+olivia_ps.txt
+frida_*.txt
+
+# IDE / 系统
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store
