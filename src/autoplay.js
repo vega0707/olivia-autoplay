@@ -297,6 +297,71 @@
         'border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);' +
         'color:#e8eaed;font-family:inherit;';
 
+    // ------------------------- 面板拖动 -------------------------
+    // 按住标题栏可把面板拖到任意位置；松手后位置写入 localStorage，
+    // 下次启动自动恢复。位移 < 5px 视为普通点击（保留折叠行为）。
+    var POS_KEY = 'olivia_autoplay_pos';
+    function clampPanelPos(wrap, left, top) {
+        var w = wrap.offsetWidth || 280;
+        var minX = -(w - 48);                                  // 允许拖出侧边，但保留 48px 可抓
+        var maxX = Math.max(window.innerWidth - 48, minX);
+        var minY = 0;
+        var maxY = Math.max(window.innerHeight - 36, 0);       // 顶部不允许拖出，底部保留标题栏
+        return {
+            left: Math.min(Math.max(left, minX), maxX),
+            top: Math.min(Math.max(top, minY), maxY)
+        };
+    }
+    function applyPanelPos(wrap, left, top) {
+        var p = clampPanelPos(wrap, left, top);
+        wrap.style.left = p.left + 'px';
+        wrap.style.top = p.top + 'px';
+        wrap.style.right = 'auto';
+        wrap.style.bottom = 'auto';
+    }
+    function restorePanelPos(wrap) {
+        try {
+            var p = JSON.parse(localStorage.getItem(POS_KEY) || 'null');
+            if (p && typeof p.left === 'number' && typeof p.top === 'number') {
+                applyPanelPos(wrap, p.left, p.top);
+            }
+        } catch (e) { }
+    }
+    function makeDraggable(wrap, head, onClick) {
+        var drag = null;
+        head.style.cursor = 'move';
+        head.title = '按住拖动移动面板 · 单击折叠/展开';
+        head.addEventListener('mousedown', function (e) {
+            if (e.button !== 0) return;
+            var r = wrap.getBoundingClientRect();
+            drag = { sx: e.clientX, sy: e.clientY, ox: r.left, oy: r.top, moved: false };
+            e.preventDefault();
+        });
+        document.addEventListener('mousemove', function (e) {
+            if (!drag) return;
+            var dx = e.clientX - drag.sx, dy = e.clientY - drag.sy;
+            if (!drag.moved && Math.abs(dx) < 5 && Math.abs(dy) < 5) return;
+            drag.moved = true;
+            applyPanelPos(wrap, drag.ox + dx, drag.oy + dy);
+        });
+        document.addEventListener('mouseup', function () {
+            if (!drag) return;
+            var moved = drag.moved;
+            drag = null;
+            if (moved) {
+                try {
+                    localStorage.setItem(POS_KEY, JSON.stringify({
+                        left: parseInt(wrap.style.left, 10) || 0,
+                        top: parseInt(wrap.style.top, 10) || 0
+                    }));
+                } catch (e) { }
+            } else if (onClick) {
+                onClick();
+            }
+        });
+    }
+
+
     function log() {
         try { console.log(TAG, [].slice.call(arguments).join(' ')); } catch (e) { }
     }
@@ -1513,14 +1578,16 @@
 
         wrap.appendChild(head);
         wrap.appendChild(body);
+        document.body.appendChild(wrap);
+        restorePanelPos(wrap);
 
-        head.onclick = function () {
+        function toggleFold() {
             var hidden = body.style.display === 'none';
             body.style.display = hidden ? 'flex' : 'none';
             fold.textContent = hidden ? '－' : '＋';
-        };
-
-        document.body.appendChild(wrap);
+        }
+        // 标题栏：拖动移动 / 单击折叠（由 makeDraggable 按位移区分）
+        makeDraggable(wrap, head, toggleFold);
 
         // 快捷键
         document.addEventListener('keydown', function (e) {
@@ -1760,6 +1827,8 @@
         wrap.appendChild(head);
         wrap.appendChild(body);
         document.body.appendChild(wrap);
+        restorePanelPos(wrap);
+        makeDraggable(wrap, head, null);
 
         return {
             setMessage: function (text) { try { msg.textContent = text; } catch (e) { } },
