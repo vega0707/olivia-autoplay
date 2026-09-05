@@ -48,6 +48,50 @@
     var offlineData = { songs: [], fetching: false, since: 0 };   // 桥接取回的完整元数据曲目
     window.__oliviaOffline = offlineData;               // 调试句柄
 
+
+    // ---------------------------------------------------------------------
+    // v22.8：写信功能离线化 —— 劫持 /letter/* 到本机 mock 信箱服务
+    // 官方写信/收信后端已下线（BSide Test 离线构建），按钮因此被隐藏。
+    // mail_server.js 在 127.0.0.1:8787 实现 /letter/send|list|detail|
+    // unread_count|resend|share，并让 Olivia 自动回信。这里把游戏内所有
+    // /letter/ 请求路由过去，使「写信」在离线环境也能用。
+    // ---------------------------------------------------------------------
+    (function installMailHijack() {
+        var MAIL_HOST = 'http://127.0.0.1:8787';
+        function rewrite(url) {
+            try {
+                var u = new URL(url, location.href);
+                if (u.pathname.indexOf('letter') === -1) return null;
+                return MAIL_HOST + u.pathname + u.search;
+            } catch (e) { return null; }
+        }
+        var origOpen = XMLHttpRequest.prototype.open;
+        XMLHttpRequest.prototype.open = function (method, url) {
+            var nu = rewrite(url);
+            if (nu) {
+                try { console.log(TAG, '[mail] XHR', method, url, '->', nu); } catch (e) {}
+                return origOpen.call(this, method, nu, arguments[2], arguments[3], arguments[4]);
+            }
+            return origOpen.apply(this, arguments);
+        };
+        if (window.fetch) {
+            var origFetch = window.fetch.bind(window);
+            window.fetch = function (input, init) {
+                var url = (input && typeof input === 'object' && input.url) ? input.url : input;
+                var nu = rewrite(url);
+                if (nu) {
+                    try { console.log(TAG, '[mail] fetch', url, '->', nu); } catch (e) {}
+                    if (typeof input !== 'string' && input instanceof Request) {
+                        return origFetch(new Request(nu, input), init);
+                    }
+                    return origFetch(nu, init);
+                }
+                return origFetch(input, init);
+            };
+        }
+        try { console.log(TAG, '[mail] hijack installed →', MAIL_HOST); } catch (e) {}
+    })();
+
     // ---------------------------------------------------------------------
     // v21：播放器事件直接观测（ToyPianistClient webPlayerControl）。
     // 官方 store 的进度更新（case"timeupdate": d.value=B.currentTime）
