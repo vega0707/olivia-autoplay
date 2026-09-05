@@ -1,5 +1,9 @@
 # 🎵 olivia-autoplay
 
+<p align="center">
+  <img src="docs/panel.png" alt="自动连播面板 / autoplay panel" width="480">
+</p>
+
 [中文](#中文) | [English](#english)
 
 ---
@@ -19,6 +23,8 @@
 - **完整曲目列表** —— 可滚动队列列表，点击任意一首即播，当前曲目高亮并自动滚动到可见
 - **曲库动态补扫** —— 自动发现懒加载的歌单（独奏 / 弹唱 / 伴奏），数据到达后自动建队
 - **零侵入设计** —— 不修改游戏任何官方逻辑，只读官方状态、只调官方 API，全部异常兜底
+
+![游戏内效果](docs/screenshot-panel.png)
 
 ### 工作原理
 
@@ -100,6 +106,8 @@ olivia-autoplay/
 - **Full track list** — scrollable queue with click-to-play, current track highlighted and auto-scrolled into view
 - **Dynamic library re-scan** — auto-discovers lazily-registered playlists (solo / play-sing / instrumental) and builds the queue once data arrives
 - **Non-invasive design** — never modifies official game logic; reads official state and calls official APIs only, with full exception guarding
+
+![In-game view](docs/screenshot-panel.png)
 
 ### How it works
 
