@@ -4,7 +4,7 @@
   1. manual_verdicts.json  — 神经网络转录硬证据 + 名曲/副本人工读谱
   2. clusters.json         — 音频指纹聚类(转调不变), 名字冲突的高相似对 = 错配实锤候选
   3. uploaded_songs_manifest.json — 526 全量
-输出: ai_fast/AI校对报告.html
+输出: ai_fast/AI_report.html (ASCII名, 避免预览服务中文路径兼容问题)
 """
 import os, sys, json, html, datetime, base64, io
 
@@ -19,12 +19,7 @@ def thumb_uri(code):
     p = os.path.join(OUT, f"{code}_spec.png")
     if os.path.isfile(p):
         try:
-            from PIL import Image
-            im = Image.open(p).convert("RGB")
-            im.thumbnail((280, 160))
-            buf = io.BytesIO()
-            im.save(buf, "JPEG", quality=80)
-            uri = "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
+            uri = "data:image/png;base64," + base64.b64encode(open(p, "rb").read()).decode()
         except Exception:
             uri = ""
     _INLINE[code] = uri
@@ -112,7 +107,7 @@ def main():
         if lv in ("MISMATCH", "SUSPECT", "CHECK"):
             u = thumb_uri(code)
             if u:
-                img = f'<a href="{code}_spec.png"><img src="{u}" style="width:210px;border:1px solid #ddd;border-radius:4px;display:block;margin-top:4px" alt="{code}"></a>'
+                img = f'<a href="{code}_spec.png"><img src="{u}" style="max-width:420px;width:100%;border:1px solid #ddd;border-radius:4px;display:block;margin-top:4px" alt="{code}"></a>'
         return (f'<tr><td class="mono">{code}</td><td>{html.escape(name)}</td>'
                 f'<td>{b}</td><td class="note">{note_html}{img}</td><td>{spec}</td></tr>')
 
@@ -181,7 +176,7 @@ tr:hover{{background:#f8f9fb}}
 </ul>
 </div></body></html>"""
 
-    outp = os.path.join(OUT, "AI校对报告.html")
+    outp = os.path.join(OUT, "AI_report.html")
     open(outp, "w", encoding="utf-8").write(page)
     print("report ->", outp)
     print(f"stats: MISMATCH={n_mm} SUSPECT={n_sp} CHECK={n_ck} OK={n_ok} UNCOVERED={n_un} / total={len(man)}")
