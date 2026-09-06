@@ -1,5 +1,5 @@
 {
- "_comment": "人工+神经网络逐曲裁决。evidence等级: proven=神经网络转录硬证据 / identical=聚类指纹sim>=0.995(同音频;字节级复核9对均为不同文件的独立渲染) / strong=副本结构对比或签名级吻合 / medium=名曲谱面特征兼容 / info=线索。注意: 粗粒度指纹在0.9x区间饱和无区分度(全体中位数0.908), 仅>=0.995可采信; 细指纹(12x96)基准: 同音频=1.000, 随机对=0.83~0.87。覆盖: 流行歌21首批量核验(批1) + 名曲15首核验(批2: 晴天/青花瓷/说好不哭/大鱼/Una Mattina/Summer/City of Stars/Bad Apple!×2等), 均零新增错配。",
+ "_comment": "人工+神经网络逐曲裁决。evidence等级: proven=神经网络转录硬证据 / identical=聚类指纹sim>=0.995(同音频;字节级复核9对均为不同文件的独立渲染) / strong=副本结构对比或签名级吻合 / medium=名曲谱面特征兼容 / info=线索。注意: 粗粒度指纹在0.9x区间饱和无区分度(全体中位数0.908), 仅>=0.995可采信; 细指纹(12x96)基准: 同音频=1.000, 随机对=0.83~0.87。覆盖: 流行歌21首批量核验(批1) + 名曲15首核验(批2) + 名曲扫尾29首(批3: 致爱丽丝/阿狄丽娜/月光奏鸣曲/富士山下/海阔天空等), 可辨认曲名全核验。",
  "items": [
   {
    "code": "MZGOUC",
@@ -357,6 +357,209 @@
    "verdict": "CHECK",
    "evidence": "medium",
    "detail": "[批2转录核验] B大调系(C#/D#/E/F#/G#/A) + E5长音 + G#5对 + 结尾C#6×4同音链, 调性与打上花火相容; 但30s窗口未见PZN40V的G#5/A#5念唱链签名(可能处于不同乐段); 与PZN40V细指纹0.79异常低(低于随机带, 稀疏录音rms0.023所致), 无法证实亦无法证伪, 待人工。"
+  },
+  {
+   "code": "R8DED2",
+   "name": "富士山下 - 陈奕迅",
+   "verdict": "OK",
+   "evidence": "strong",
+   "detail": "[批3转录核验] C#大调全集(转录直接拼出E#/B#导音) + 开场E4×7同音链 + 13-25s B#5/E#5音节式念唱链, 即富士山下主歌的标志写法; 结构签名吻合(原曲C#调)。"
+  },
+  {
+   "code": "U04U01",
+   "name": "海阔天空 - Beyond",
+   "verdict": "OK",
+   "evidence": "strong",
+   "detail": "[批3转录核验] D大调全集(原调无需移调) + 低音区念唱主歌(D4×3/B3/F#4) → 副歌A5/G5/F#6高音爆发 + E5×6重复钩子, 海阔天空主副歌结构签名吻合。"
+  },
+  {
+   "code": "DMPSLL",
+   "name": "月光奏鸣曲第一乐章 (贝多芬)",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批3转录核验] C#小调全集(C#/D#/E/F#/G#/A/B) + C#6链→A#5→G#5旋律下降形 + 中音区持续分解(三连音固定音型被AMT抹平为长音), 与月光第一乐章幻想曲式织体吻合。"
+  },
+  {
+   "code": "P2ZRQM",
+   "name": "月光奏鸣曲第三乐章 (贝多芬)",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批3转录核验] 快板织体(30s内426音≈14音/秒) + 大量重复音链(A#5×3/G#5×3+/G#5×4+)=Presto agitato反复音签名; 全黑键集合=移调至G#小调的编配(C#小调上方五度); 与月光第三乐章兼容。"
+  },
+  {
+   "code": "SOAZ9Y",
+   "name": "水边的阿狄丽娜 (Ballade pour Adeline)",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批3转录核验] 全黑键集合(移调至D#m/F#族) + 优雅下行开场(D#6→C#6→A#5) + A#5/G#5重复音悬停 + 琶音低音, 与阿狄丽娜钢琴版的抒情圆舞写法兼容。"
+  },
+  {
+   "code": "M42Z2I",
+   "name": "永远同在 -《千与千寻》主题曲",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批3转录核验] E大调系(个别A#外音) + 温柔级进乐句(F#5-E5-E5-E5) + E5重复音悬停, 与いつも何度でも钢琴版(移调编配)兼容。"
+  },
+  {
+   "code": "3FUZUQ",
+   "name": "遇见 - 孙燕姿",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批3转录核验] B大调系五声为主(B#/C外音偶现) + A#5/G#5/F#5温柔重复音乐句 + B4低音区对答, 与遇见的吟唱式主歌写法兼容(移调编配)。"
+  },
+  {
+   "code": "LJNEZH",
+   "name": "Moon Halo (崩坏三)",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批3转录核验] G#小调全集(G#/A#/C#/D#/E/F#) + D#6/F#6韵律化重复链主歌(各×8-10) + 高音区长音, 与Moon Halo重复音驱动的圣咏式写法兼容。"
+  },
+  {
+   "code": "NJLLJA",
+   "name": "致爱丽丝",
+   "verdict": "MISMATCH",
+   "evidence": "proven",
+   "detail": "[批3转录核验] 确证错配: 0-30s无Für Elise标志主题E-D#-E-D#-E-B-D-C-A的任何移调痕迹(A小调白键/其他移调均排除), 滚图为浓密持续和弦抒情曲织体而非单旋律+分解伴奏, 音域偏高(A5-C#6), 音集杂乱(C自然与C#并存)。真身未定名, 保留原标签待人工听认, 不改名。"
+  },
+  {
+   "code": "37HPP0",
+   "name": "悲怆第二乐章 (贝多芬)",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] 转录退化: 30s skyline全部锁定G#5/G#6单音(疑泛音锁定/录音致密伪影), 织体为持续长音型; 如歌乐章不可能30s单音静止, 该转录不可用于判定; 待人工。"
+  },
+  {
+   "code": "QJZJG5",
+   "name": "梁祝",
+   "verdict": "CHECK",
+   "evidence": "medium",
+   "detail": "[批3转录核验] E大调系稀疏旋律线(仅18音, G#4/A4/B4级进邻音), 与梁祝爱情主题的级进五声轮廓大致兼容但无签名级吻合; 待人工。"
+  },
+  {
+   "code": "RXUWFC",
+   "name": "蒲公英的约定 - 周杰伦",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] 转录极稀疏(17音): F#6长音链(0-13s)+F#m三和弦材料(F#/A#/C#), 无法签名级判定; 待人工。"
+  },
+  {
+   "code": "KBBL3K",
+   "name": "From the Start (Laufey)",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] E大调集合(E/G#/B/D#) + E5-B5呼应长音, 爵士写法兼容; 转录稀疏(20音)且无独立旋律记忆可对照; 待人工。"
+  },
+  {
+   "code": "1HKZAI",
+   "name": "那个夏天 -《千与千寻》插曲",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] 极稀疏转录(16音), 高音区黑键材料(F#/G#/A#/C#)+F自然混列, 无法签名级判定One Summer's Day; 待人工。"
+  },
+  {
+   "code": "RSB45P",
+   "name": "古画 - 鞠婧祎",
+   "verdict": "CHECK",
+   "evidence": "medium",
+   "detail": "[批3转录核验] G#小调家族稀疏旋律(G#锚定+C#5/D#5/E4/A#3), 中国风抒情兼容; 古画参考旋律不可靠, 无法签名级判定。"
+  },
+  {
+   "code": "PZNTAM",
+   "name": "再见深海",
+   "verdict": "CHECK",
+   "evidence": "medium",
+   "detail": "[批3转录核验] B大调系(B/C#/D#/F#/G#/A#)抒情乐句(A#5/D#5/G#5), 参考旋律不可靠, 无法签名级判定。"
+  },
+  {
+   "code": "SCP7TV",
+   "name": "Star Sky (Two Steps From Hell)",
+   "verdict": "CHECK",
+   "evidence": "medium",
+   "detail": "[批3转录核验] 高音区G#6锚定咏叹旋律(E大调系+个别C), 与Star Sky钢琴版高潮段兼容; 无签名级依据。"
+  },
+  {
+   "code": "FRU6OD",
+   "name": "Dancing in the Moonlight (游戏BGM)",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] G#6驱动链(0-9s)+G#5/C#6/D#6舞曲织体(G#m/B大调族), 参考旋律不可靠, 无法判定。"
+  },
+  {
+   "code": "E6MHFX",
+   "name": "Down By The River",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] A大调集合温柔级进线(A5/B5/C#5乐句+F#4低音), 民谣摇篮曲风格兼容, 无签名依据。"
+  },
+  {
+   "code": "GDP7O6",
+   "name": "Tek It (Watch The Moon)",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] C#大调家族(B#4/E#4变音记号再现)+C#5重复链, 参考不可靠。"
+  },
+  {
+   "code": "IF19Z7",
+   "name": "Heavy Serenade - NMXX",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] G#小调五声密集链(D#5×many/G#4链)+F#6峰值, 小众曲无签名参考。"
+  },
+  {
+   "code": "70W1M3",
+   "name": "いつもこの場所で (命运石之门ED)",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] E大调家族+G#4/E4韵律化重复链+B4/D#5乐句, 抒情结构兼容; 参考不可靠。"
+  },
+  {
+   "code": "JX39HR",
+   "name": "冰湖的凯旋礼 (B站 Air-Piano)",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] C#大调家族高音区咏叹旋律(B5-D#7, E#/B#再现), 小众B站曲无签名参考。"
+  },
+  {
+   "code": "BI8E72",
+   "name": "遐蝶动画短片《那安息的长夜》",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] D#5韵律化重复链+降号族集合(A#/D#/F#/G#), 与崩铁抒情主题兼容; 小众曲无法签名级判定。"
+  },
+  {
+   "code": "QSR5SY",
+   "name": "坠星的摇篮 Fallen Star's Cradle",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] 音集杂乱(E/A/B/G#与A#/D#/B#混列), 疑复杂编曲致转录噪声, 无法判定。"
+  },
+  {
+   "code": "JQ7S0K",
+   "name": "星空列车与白的旅行 OP",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] G#小调系+G#4念唱链+F#6/G#5高音区, 动画OP写法兼容; 小众曲无签名参考。"
+  },
+  {
+   "code": "SL1UL0",
+   "name": "Star Aligh (伊芙琳)",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] 与ANJWTL[Star Aligh钢琴伴奏]细指纹0.834=不同音频; 主歌版vs伴奏版本就不同, 标签一致无名字冲突; 小众曲无签名参考。"
+  },
+  {
+   "code": "ANJWTL",
+   "name": "Star Aligh 钢琴伴奏 (伊芙琳)",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] 与SL1UL0细指纹0.834=不同音频, 伴奏版本就独立; 标签一致无冲突。"
+  },
+  {
+   "code": "QWL4EK",
+   "name": "原色纯音乐",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批3转录核验] 与已证同音频的原色组(0H2T8F≡ZS0XTV, sim=1.000)细指纹仅0.838=不同音频; 纯音乐版vs人声版可解释; 标签同曲无冲突。"
   }
  ],
  "copy_groups": [
