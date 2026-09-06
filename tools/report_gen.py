@@ -77,7 +77,7 @@ def main():
         return {"MISMATCH": '<span class="b b-mm">错配实锤</span>',
                 "SUSPECT": '<span class="b b-sp">错配嫌疑</span>',
                 "CHECK":   '<span class="b b-ck">待定</span>',
-                "OK":      '<span class="b b-ok">已验证</span>'}[lv]
+                "OK":      '<span class="b b-ok">已验证正确</span>'}[lv]
 
     def row(code):
         name = code2name.get(code, "?")
