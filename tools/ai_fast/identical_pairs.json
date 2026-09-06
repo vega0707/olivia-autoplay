@@ -1,0 +1,101 @@
+[
+ {
+  "sim": 1.0,
+  "a": {
+   "code": "PZN40V",
+   "name": "打上花火（《烟花》）"
+  },
+  "b": {
+   "code": "18CMX8",
+   "name": "Yuri on ice《冰上的尤里》"
+  }
+ },
+ {
+  "sim": 1.0,
+  "a": {
+   "code": "IAB4A8",
+   "name": "鸟之诗"
+  },
+  "b": {
+   "code": "8K8Q08",
+   "name": "oblivious-kalafina"
+  }
+ },
+ {
+  "sim": 1.0,
+  "a": {
+   "code": "0H2T8F",
+   "name": "ZZZ 耀嘉音《原色》「天琴座 +」  来源：MidiShow@流风倾云"
+  },
+  "b": {
+   "code": "ZS0XTV",
+   "name": "原色（人声音轨）"
+  }
+ },
+ {
+  "sim": 1.0,
+  "a": {
+   "code": "C0L08L",
+   "name": "DAMIDAMI  来自 B 站 up 不负仙人"
+  },
+  "b": {
+   "code": "6S83FD",
+   "name": "覆灭重生"
+  }
+ },
+ {
+  "sim": 1.0,
+  "a": {
+   "code": "9ZS4MS",
+   "name": "Φ² ‑ HOYO‑MiX、TetraCalyx_(人声版)"
+  },
+  "b": {
+   "code": "MLKXWO",
+   "name": "Lyin（see you the next word）"
+  }
+ },
+ {
+  "sim": 1.0,
+  "a": {
+   "code": "V89YNA",
+   "name": "何者（崩铁）"
+  },
+  "b": {
+   "code": "0UY0AT",
+   "name": "再度和你（崩铁 昔涟 pv）"
+  }
+ },
+ {
+  "sim": 0.998,
+  "a": {
+   "code": "M21SDZ",
+   "name": "霞光 - 曲锦楠"
+  },
+  "b": {
+   "code": "3ZXEJP",
+   "name": "边狱巴士 Dongbaek（东柏主题曲）"
+  }
+ },
+ {
+  "sim": 0.996,
+  "a": {
+   "code": "NITEDT",
+   "name": "火花‑痴人说梦 PV (崩铁)"
+  },
+  "b": {
+   "code": "YHLLND",
+   "name": "星与你消失之日  半糖西西"
+  }
+ },
+ {
+  "sim": 0.996,
+  "a": {
+   "code": "1LFR46",
+   "name": "静谧的星夜（须弥城夜晚）"
+  },
+  "b": {
+   "code": "RV144J",
+   "name": "游步欣愉（挪德卡莱野外；望月者主题曲原版曲）"
+  }
+ }
+]

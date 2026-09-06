@@ -1,0 +1,238 @@
+{
+  "_comment": "人工+神经网络逐曲裁决。evidence等级: proven=神经网络转录硬证据 / identical=聚类指纹sim>=0.995(音频完全相同) / strong=副本结构对比 / medium=名曲谱面特征兼容 / info=线索。注意: 粗粒度指纹在0.9x区间饱和无区分度(全体中位数0.908), 仅>=0.995可采信。",
+  "items": [
+    {
+      "code": "MZGOUC",
+      "name": "夜的钢琴曲 5",
+      "verdict": "MISMATCH",
+      "evidence": "proven",
+      "detail": "AMT-APC 神经网络转录显示大量黑键 D#4/G#4/C#5; 《夜的钢琴曲5》为纯C大调、零黑键。硬性矛盾, 该视频绝不是夜5。真身不在指纹可比对集合中, 修复需人工听认。"
+    },
+    {
+      "code": "T0MNQB",
+      "name": "肖邦 降E大调夜曲 Op.9-2",
+      "verdict": "OK",
+      "evidence": "proven",
+      "detail": "神经网络转录谱面与肖邦夜曲Op.9-No.2官方钢琴谱吻合(降E大调、装饰回音主题)。"
+    },
+    {
+      "code": "RUZW6B",
+      "name": "志明与春娇",
+      "verdict": "OK",
+      "evidence": "strong",
+      "detail": "转录旋律 D大调 F#5/C#5/G#4 走向 + A5×4→G5×4 重复动机, 与《志明与春娇》副歌旋律线吻合。"
+    },
+    {
+      "code": "KFNPWV",
+      "name": "Flower Dance (DJ Okawari)",
+      "verdict": "OK",
+      "evidence": "medium",
+      "detail": "低音区密集爵士律动 + 中音区分解和弦, 与 Flower Dance 开头钢琴循环风格兼容。"
+    },
+    {
+      "code": "IWYYPS",
+      "name": "《天空之城》",
+      "verdict": "OK",
+      "evidence": "medium",
+      "detail": "稀疏 C4 长音旋律 + C3 分解伴奏, 起句形态与《天空之城》钢琴版兼容。"
+    },
+    {
+      "code": "FIQOLB",
+      "name": "Lemon (米津玄师)",
+      "verdict": "OK",
+      "evidence": "medium",
+      "detail": "窄音域密集旋律 + 规律分解低音, 与 Lemon 钢琴改编常见织体兼容。"
+    },
+    {
+      "code": "K9DWYU",
+      "name": "起风了",
+      "verdict": "OK",
+      "evidence": "medium",
+      "detail": "C4 区级进旋律乐句 + 稀疏 C2 低音, 与《起风了》抒情钢琴版织体兼容。"
+    },
+    {
+      "code": "49AUFQ",
+      "name": "夜曲 — 周杰伦",
+      "verdict": "OK",
+      "evidence": "medium",
+      "detail": "低音区 C1-C2 连续十六分律动循环 + 高音区稀疏旋律, 与《夜曲》开头标志性反复音型兼容。"
+    },
+    {
+      "code": "4008V2",
+      "name": "雨的印记 Kiss the Rain",
+      "verdict": "OK",
+      "evidence": "medium",
+      "detail": "持续 C4 旋律 + C2/C1 规律分解和弦伴奏, 与 Yiruma《Kiss the Rain》织体兼容。"
+    },
+    {
+      "code": "K5GLIP",
+      "name": "Unravel (《东京喰种》A叔版)",
+      "verdict": "OK",
+      "evidence": "medium",
+      "detail": "全曲高密度 + 强低音支撑, 与 A叔高强度钢琴改编风格兼容。"
+    },
+    {
+      "code": "DNPLFE",
+      "name": "前前前世 (《你的名字》)",
+      "verdict": "OK",
+      "evidence": "medium",
+      "detail": "开场即 C4 区密集快速和弦 + C2/C3 低音打击, 与《前前前世》 explosive 开头兼容。"
+    },
+    {
+      "code": "3HDROD",
+      "name": "克罗地亚狂想曲",
+      "verdict": "OK",
+      "evidence": "medium",
+      "detail": "C3-C4 连续固定音型横贯带 + 乐句起点低音重击, 与马克西姆版《克罗地亚狂想曲》特征吻合。"
+    },
+    {
+      "code": "PZN40V",
+      "name": "打上花火 (《烟花》)",
+      "verdict": "MISMATCH",
+      "evidence": "identical",
+      "detail": "与 18CMX8[Yuri on ice] 音频完全相同(指纹sim=1.000, 谱面逐帧一致: 同一C3长低音线+相同C2重音位)。打上花火与Yuri on Ice是不同曲子 → 这两条目必有一条名字在说谎, PZN40V 与 18CMX8 二选一错标。"
+    },
+    {
+      "code": "18CMX8",
+      "name": "Yuri on ice《冰上的尤里》",
+      "verdict": "MISMATCH",
+      "evidence": "identical",
+      "detail": "与 PZN40V[打上花火] 音频完全相同(sim=1.000, 谱面逐帧一致)。二者名字必有一错; 用户听其中任一条目即可裁决归属。"
+    },
+    {
+      "code": "IAB4A8",
+      "name": "鸟之诗",
+      "verdict": "MISMATCH",
+      "evidence": "identical",
+      "detail": "与 8K8Q08[oblivious-kalafina] 音频完全相同(谱面PNG逐像素一致)。《鸟之诗》(Lia)与《oblivious》(Kalafina)是完全不同的两首歌 → 必有一条错标。"
+    },
+    {
+      "code": "8K8Q08",
+      "name": "oblivious-kalafina",
+      "verdict": "MISMATCH",
+      "evidence": "identical",
+      "detail": "与 IAB4A8[鸟之诗] 音频完全相同(PNG逐像素一致)。二者必有一条错标, 听任一条即可裁决。"
+    },
+    {
+      "code": "C0L08L",
+      "name": "DAMIDAMI (B站up 不负仙人)",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 6S83FD[覆灭重生] 音频完全相同(sim=1.000)。名字不同 → 必有一条错标。"
+    },
+    {
+      "code": "6S83FD",
+      "name": "覆灭重生",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 C0L08L[DAMIDAMI] 音频完全相同(sim=1.000)。必有一条错标。"
+    },
+    {
+      "code": "9ZS4MS",
+      "name": "Φ² - HOYO-MiX、TetraCalyx",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 MLKXWO[Lyin] 音频完全相同(sim=1.000)。必有一条错标。"
+    },
+    {
+      "code": "MLKXWO",
+      "name": "Lyin (see you the next world)",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 9ZS4MS[Φ²] 音频完全相同(sim=1.000)。必有一条错标。"
+    },
+    {
+      "code": "V89YNA",
+      "name": "何者 (崩铁)",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 0UY0AT[再度和你 崩铁昔涟pv] 音频完全相同(sim=1.000)。两首是不同曲目 → 必有一条错标。"
+    },
+    {
+      "code": "0UY0AT",
+      "name": "再度和你 (崩铁 昔涟 pv)",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 V89YNA[何者] 音频完全相同(sim=1.000)。必有一条错标。"
+    },
+    {
+      "code": "M21SDZ",
+      "name": "霞光 - 曲锦楠",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 3ZXEJP[边狱巴士 Dongbaek东柏主题曲] 音频几乎完全相同(sim=0.998)。名字不同 → 必有一条错标。"
+    },
+    {
+      "code": "3ZXEJP",
+      "name": "边狱巴士 Dongbaek (东柏主题曲)",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 M21SDZ[霞光] 音频几乎完全相同(sim=0.998)。必有一条错标。"
+    },
+    {
+      "code": "NITEDT",
+      "name": "火花-痴人说梦 PV (崩铁)",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 YHLLND[星与你消失之日 半糖西西] 音频几乎完全相同(sim=0.996)。名字不同 → 必有一条错标。"
+    },
+    {
+      "code": "YHLLND",
+      "name": "星与你消失之日 (半糖西西)",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 NITEDT[火花-痴人说梦PV] 音频几乎完全相同(sim=0.996)。必有一条错标。"
+    },
+    {
+      "code": "1LFR46",
+      "name": "静谧的星夜 (须弥城夜晚)",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 RV144J[游步欣愉-挪德卡莱野外/望月者主题曲] 音频几乎完全相同(sim=0.996)。名字不同 → 必有一条错标。"
+    },
+    {
+      "code": "RV144J",
+      "name": "游步欣愉 (挪德卡莱野外/望月者主题曲)",
+      "verdict": "SUSPECT",
+      "evidence": "identical",
+      "detail": "与 1LFR46[静谧的星夜] 音频几乎完全相同(sim=0.996)。必有一条错标。"
+    },
+    {
+      "code": "0H2T8F",
+      "name": "ZZZ 耀嘉音《原色》「天琴座+」",
+      "verdict": "OK",
+      "evidence": "info",
+      "detail": "与 ZS0XTV[原色(人声音轨)] 音频完全相同, 但两者名字都指向《原色》→ 同曲双版本标签, 一致, 不算错配。"
+    },
+    {
+      "code": "ZS0XTV",
+      "name": "原色 (人声音轨)",
+      "verdict": "OK",
+      "evidence": "info",
+      "detail": "与 0H2T8F[原色 天琴座+] 音频相同但标签同曲 → 一致。"
+    }
+  ],
+  "copy_groups": [
+    {
+      "song": "One last kiss (《新·福音战士剧场版：终》)",
+      "codes": ["R6HOSD", "Q3Z4DK", "4SLYQQ", "EO06FU"],
+      "verdict": "CHECK",
+      "evidence": "medium",
+      "detail": "四副本两两粗指纹相似0.883~0.956, 均在背景分布内(全体中位0.908), 不构成错配证据——不同用户的独立钢琴编曲本就不同。无聚类名字冲突牵连。维持待定, 建议游戏内抽查。"
+    },
+    {
+      "song": "打上花火 (《烟花》)",
+      "codes": ["PZN40V", "IN5JJF"],
+      "verdict": "CHECK",
+      "evidence": "strong",
+      "detail": "副本相似度仅0.840(低于全体中位), 但跨副本本就是不同编曲, 不构成错配证据。真正的问题是 PZN40V≡18CMX8[Yuri on ice](sim=1.000) → 见单曲条目; IN5JJF 反而是唯一谱面不被牵连的'打上花火'。"
+    },
+    {
+      "song": "红莲华 (《鬼灭之刃》)",
+      "codes": ["9EOAEQ", "97RNJ6"],
+      "verdict": "CHECK",
+      "evidence": "medium",
+      "detail": "相似0.862在背景分布内; 无名字冲突牵连; 编曲疏密差异可解释。维持待定。"
+    }
+  ]
+}
