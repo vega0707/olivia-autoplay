@@ -1,5 +1,5 @@
 {
- "_comment": "人工+神经网络逐曲裁决。evidence等级: proven=神经网络转录硬证据 / identical=聚类指纹sim>=0.995(同音频;字节级复核9对均为不同文件的独立渲染) / strong=副本结构对比 / medium=名曲谱面特征兼容 / info=线索。注意: 粗粒度指纹在0.9x区间饱和无区分度(全体中位数0.908), 仅>=0.995可采信; 细指纹(12x96)基准: 同音频=1.000, 随机对=0.83~0.87。",
+ "_comment": "人工+神经网络逐曲裁决。evidence等级: proven=神经网络转录硬证据 / identical=聚类指纹sim>=0.995(同音频;字节级复核9对均为不同文件的独立渲染) / strong=副本结构对比或签名级吻合 / medium=名曲谱面特征兼容 / info=线索。注意: 粗粒度指纹在0.9x区间饱和无区分度(全体中位数0.908), 仅>=0.995可采信; 细指纹(12x96)基准: 同音频=1.000, 随机对=0.83~0.87。覆盖: 流行歌21首批量核验(批1) + 名曲15首核验(批2: 晴天/青花瓷/说好不哭/大鱼/Una Mattina/Summer/City of Stars/Bad Apple!×2等), 均零新增错配。",
  "items": [
   {
    "code": "MZGOUC",
@@ -49,13 +49,6 @@
    "verdict": "OK",
    "evidence": "medium",
    "detail": "C4 区级进旋律乐句 + 稀疏 C2 低音, 与《起风了》抒情钢琴版织体兼容。"
-  },
-  {
-   "code": "49AUFQ",
-   "name": "夜曲 — 周杰伦",
-   "verdict": "OK",
-   "evidence": "medium",
-   "detail": "低音区 C1-C2 连续十六分律动循环 + 高音区稀疏旋律, 与《夜曲》开头标志性反复音型兼容。"
   },
   {
    "code": "4008V2",
@@ -259,6 +252,111 @@
    "verdict": "OK",
    "evidence": "strong",
    "detail": "[批量转录核验] E大调/C#m家族(E5/F#5/G#5), E-F#-G#级进回环+G#5副歌长音, 与快谱验证一致"
+  },
+  {
+   "code": "GZZ95K",
+   "name": "晴天 - 周杰伦",
+   "verdict": "OK",
+   "evidence": "strong",
+   "detail": "[批2转录核验] A大调集合(A/B/C#/E/F#/G#) + 诗句式同音重复链 A5×5→B5×6→A5×4→G#5×3, 即晴天念唱式主歌('故事的小黄花')的标志性写法; 结构签名吻合。"
+  },
+  {
+   "code": "FZL9EK",
+   "name": "青花瓷 - 周杰伦",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] B大调五声集合(B/C#/D#/F#/G#为主, 个别E/A/D外音) + 中音区柱式和弦抒情织体, 与青花瓷中国风五声旋律的移调钢琴编配兼容(中国风五声在B大调上即全黑键)。"
+  },
+  {
+   "code": "0A9VIJ",
+   "name": "说好不哭 - 周杰伦",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] 全黑键G#m五声集合(G#/A#/C#/D#/F#) + C#6×5同音重复链 + F#6高音accent, 与'你什么都没有却还为我的梦加油'吟诵式副歌的同音反复写法吻合(移调编配)。"
+  },
+  {
+   "code": "IGDE2E",
+   "name": "大鱼 (《大鱼海棠》印象曲)",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] A大调集合(个别D#外音) + D6/F#6漂浮长音拱形轮廓 + A5同音链(21-24s), 与大鱼钢琴版的高音区漂浮抒情织体兼容。"
+  },
+  {
+   "code": "N1ZNLT",
+   "name": "Una Mattina (Einaudi)",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] 极稀疏单音+静默冥想织体, 音集恰为C#自然小调全集(C#/D#/E/F#/G#/B); 原曲A小调(+3半音移调编配即C#小调), 与Una Mattina的简约结构兼容。"
+  },
+  {
+   "code": "PAYPY7",
+   "name": "菊次郎的夏天 Summer (久石让)",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] G大调集合(G/A/B/C/D/E/F#)与Summer原调一致, 无需移调; D6-E6峰值 + B4/G5骨架与主题动机走向兼容。"
+  },
+  {
+   "code": "0AFC4T",
+   "name": "CITY OF STARS (《爱乐之城》)",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] E大调集合(E/F#/G#/A/C#/D#); 开场D#5×3同音动机 + 长音叹息句 + 稀疏忧郁织体, 与City of Stars主题句式兼容(移调编配)。"
+  },
+  {
+   "code": "F9142H",
+   "name": "Bad Apple!",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] 与2J8I2Q[Bad Apple!]旋律线逐音一致(F#5→E5→D#6/D6长音→E6→…→B5→E5), 为同一MIDI的两次独立上传(与PZN40V/18CMX8同模式; 时间网格漂移解释了细指纹0.857假阴性); 中音区密集和弦驱动织体+同音重复链主歌与Bad Apple钢琴改编形态兼容, 无反驳证据。两份标签一致故无名字冲突需修。"
+  },
+  {
+   "code": "2J8I2Q",
+   "name": "Bad Apple!",
+   "verdict": "OK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] 与F9142H旋律线逐音一致(同一MIDI两次独立上传); 织体与Bad Apple改编形态兼容, 无反驳证据。"
+  },
+  {
+   "code": "N2GA4F",
+   "name": "O叔版晴天",
+   "verdict": "CHECK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] 三个窗口(0-30/30-60/60-90s)均为B大调系全黑键抒情织体+同音重复链(F#5链/G#6链/D#6长音), 与'晴天'G大调五声移调到B大调的音集完全兼容; 但旋律稀疏(O叔慢板改编), 无签名级逐音吻合; 与晴天标准版GZZ95K细指纹仅0.84(慢板前奏vs念唱主歌的乐段错位所致, 不可判)。无反驳证据, 保持标签待人工听认。"
+  },
+  {
+   "code": "6ONQOD",
+   "name": "赵雷成都",
+   "verdict": "CHECK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] 前30s为前奏, 转录稀疏(22音); 音集D/D#混列含半音(D5重复+D#5链), 与成都(D大调)的音集预期不符但转录稀疏不足以定论; 待人工。"
+  },
+  {
+   "code": "0RFW9J",
+   "name": "深海の孤独",
+   "verdict": "CHECK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] 全黑键G#小调五声集合(G#/A#/C#/D#/F#) + G#5×4同音链(21-25s), 日系抒情形态兼容; 该曲参考旋律记忆不可靠, 无法签名级判定。"
+  },
+  {
+   "code": "CR7Y7S",
+   "name": "银河孤独摇摆",
+   "verdict": "CHECK",
+   "evidence": "info",
+   "detail": "[批2转录核验] E大调系(F#/D#/E/B/A)稀疏长音抒情织体; 曲名参考不可靠, 无法签名级判定, 无反驳证据。"
+  },
+  {
+   "code": "3X7N3R",
+   "name": "夏日口袋 Summer Pockets",
+   "verdict": "CHECK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] 全黑键B大调五声集合(C#/D#/F#/G#/A#) + 开场C#5×9同音链(0-4.5s), 日系风格兼容; Summer Pockets具体旋律无法签名级判定。"
+  },
+  {
+   "code": "IN5JJF",
+   "name": "打上花火",
+   "verdict": "CHECK",
+   "evidence": "medium",
+   "detail": "[批2转录核验] B大调系(C#/D#/E/F#/G#/A) + E5长音 + G#5对 + 结尾C#6×4同音链, 调性与打上花火相容; 但30s窗口未见PZN40V的G#5/A#5念唱链签名(可能处于不同乐段); 与PZN40V细指纹0.79异常低(低于随机带, 稀疏录音rms0.023所致), 无法证实亦无法证伪, 待人工。"
   }
  ],
  "copy_groups": [
@@ -282,7 +380,7 @@
    ],
    "verdict": "CHECK",
    "evidence": "strong",
-   "detail": "副本相似度仅0.840(低于全体中位), 但跨副本本就是不同编曲, 不构成错配证据。真正的问题是 PZN40V≡18CMX8[Yuri on ice](sim=1.000) → 见单曲条目; IN5JJF 反而是唯一谱面不被牵连的'打上花火'。"
+   "detail": "副本相似度仅0.840(粗指纹)/0.79(细指纹, 低于随机带系IN5JJF稀疏录音所致), 但跨副本本就是不同编曲, 不构成错配证据。真正的问题是 PZN40V≡18CMX8[Yuri on ice](sim=1.000) → 见单曲条目; IN5JJF 转录核验: B大调系+C#6×4尾链与打上花火相容但无签名级吻合(见单曲条目CHECK), 是唯一谱面不被牵连的'打上花火'。"
   },
   {
    "song": "红莲华 (《鬼灭之刃》)",
