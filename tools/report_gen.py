@@ -6,10 +6,29 @@
   3. uploaded_songs_manifest.json — 526 全量
 输出: ai_fast/AI校对报告.html
 """
-import os, json, html, datetime
+import os, sys, json, html, datetime, base64, io
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "ai_fast")
+_INLINE = {}
+def thumb_uri(code):
+    """标记行的快谱缩略图 → data URI (预览环境无兄弟文件也能看证据)。"""
+    if code in _INLINE:
+        return _INLINE[code]
+    uri = ""
+    p = os.path.join(OUT, f"{code}_spec.png")
+    if os.path.isfile(p):
+        try:
+            from PIL import Image
+            im = Image.open(p).convert("RGB")
+            im.thumbnail((280, 160))
+            buf = io.BytesIO()
+            im.save(buf, "JPEG", quality=80)
+            uri = "data:image/jpeg;base64," + base64.b64encode(buf.getvalue()).decode()
+        except Exception:
+            uri = ""
+    _INLINE[code] = uri
+    return uri
 
 def load(p, default=None):
     try:
@@ -89,8 +108,13 @@ def main():
             lv, note_html = None, "—"
         b = badge(lv) if lv else '<span class="b b-un">未覆盖</span>'
         spec = f'<a href="{code}_spec.png">谱</a>'
+        img = ""
+        if lv in ("MISMATCH", "SUSPECT", "CHECK"):
+            u = thumb_uri(code)
+            if u:
+                img = f'<a href="{code}_spec.png"><img src="{u}" style="width:210px;border:1px solid #ddd;border-radius:4px;display:block;margin-top:4px" alt="{code}"></a>'
         return (f'<tr><td class="mono">{code}</td><td>{html.escape(name)}</td>'
-                f'<td>{b}</td><td class="note">{note_html}</td><td>{spec}</td></tr>')
+                f'<td>{b}</td><td class="note">{note_html}{img}</td><td>{spec}</td></tr>')
 
     # 排序: 实锤 > 嫌疑 > 待定 > 已验证 > 未覆盖, 组内按code
     def sortkey(code):

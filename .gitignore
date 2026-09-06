@@ -25,3 +25,7 @@ Thumbs.db
 docs/
 mail_data.json
 2m4l_models/
+
+# AI 批量产物(本地证据库, 不入库; 关键json/html已单独跟踪)
+tools/ai_fast/
+tools/ai_iden/

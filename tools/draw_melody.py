@@ -10,10 +10,7 @@ NOTE_NAMES = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"]
 
 def name(p): return f"{NOTE_NAMES[p%12]}{p//12-1}"
 
-def main():
-    mid, out = sys.argv[1], sys.argv[2]
-    t0 = float(sys.argv[3]) if len(sys.argv) > 3 else None
-    t1 = float(sys.argv[4]) if len(sys.argv) > 4 else None
+def draw(mid, out, t0=None, t1=None):
     pm = pretty_midi.PrettyMIDI(mid)
     notes = sorted([n for i in pm.instruments for n in i.notes], key=lambda n: n.start)
     if t0 is not None:
@@ -73,4 +70,5 @@ def main():
     print(f"MEL_NOTES={len(mel)} range[{name(pmin)},{name(pmax)}] -> {out}")
 
 if __name__ == "__main__":
-    main()
+    a = sys.argv
+    draw(a[1], a[2], float(a[3]) if len(a) > 3 else None, float(a[4]) if len(a) > 4 else None)
