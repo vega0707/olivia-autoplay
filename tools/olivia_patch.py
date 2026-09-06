@@ -27,7 +27,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 BACKUP = os.path.join(HERE, "backup")
 ORIG = os.path.join(BACKUP, "feapp.dat.orig")
 PATCHED = os.path.join(BACKUP, "feapp.dat.patched")
-INJECT_JS = os.path.join(HERE, "src", "autoplay.js")
+INJECT_JS = os.path.join(HERE, "..", "src", "autoplay.js")
 ASSET_NAME = "assets/autoplay.js"
 SCRIPT_TAG = b'<script src="./assets/autoplay.js"></script>'
 EXE_NAME = "Olivia.exe"

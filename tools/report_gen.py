@@ -35,10 +35,13 @@ def main():
     man = load(os.path.join(HERE, "uploaded_songs_manifest.json"), [])
     code2name = {m["code"]: m["name"] for m in man}
     verdicts = load(os.path.join(OUT, "manual_verdicts.json"), {"items": [], "copy_groups": []})
-    clusters = load(os.path.join(OUT, "clusters.json"), [])
+    fp = load(os.path.join(OUT, "fine_pairs.json"), None)
+    clusters = fp["pairs"] if isinstance(fp, dict) and "pairs" in fp else \
+               (fp if isinstance(fp, list) else load(os.path.join(OUT, "clusters.json"), []))
 
-    # --- 聚类分析: 仅采信 sim>=0.995 (指纹在0.9x区间饱和无区分度, 全体中位0.908) ---
-    TRUST = 0.995
+    # --- 聚类分析: 细指纹(12x96)仅采信 sim>=0.99 ---
+    # 基准: 同音频=1.000, 随机对=0.83~0.87, 0.96~0.985=低音区等风格相似假阳性带(不采信)
+    TRUST = 0.99
     conflict_pairs, dup_ok_pairs = [], []
     for c in clusters:
         if c["sim"] < TRUST:
@@ -56,20 +59,20 @@ def main():
         if old is None or LEVEL_ORDER[level] > LEVEL_ORDER[old[0]]:
             status[code] = (level, note)
 
-    LEVEL_ORDER = {"MISMATCH": 4, "SUSPECT": 3, "CHECK": 2, "OK": 1}
+    LEVEL_ORDER = {"MISMATCH": 5, "FIXED": 4, "SUSPECT": 3, "CHECK": 2, "OK": 1}
     for it in verdicts["items"]:
         setst(it["code"], it["verdict"], it["detail"])
     for g in verdicts["copy_groups"]:
         for c in g["codes"]:
             setst(c, g["verdict"], f"[副本组:{g['song']}] {g['detail']}")
 
-    # 聚类名字冲突 → 两侧升级为 SUSPECT; 但人工已判 OK(如同曲双版本)的不降级
-    manual_ok = {it["code"] for it in verdicts["items"] if it["verdict"] == "OK"}
+    # 聚类名字冲突 → 两侧升级为 SUSPECT; 但人工已判 OK/FIXED(如同曲双版本、已改名)的不降级
+    manual_keep = {it["code"] for it in verdicts["items"] if it["verdict"] in ("OK", "FIXED")}
     for c in conflict_pairs:
         for side in ("a", "b"):
             other = "b" if side == "a" else "a"
             code = c[side]["code"]
-            if code in manual_ok:
+            if code in manual_keep:
                 continue
             note = (f"聚类 sim={c['sim']} 与 [{c[other]['name']}] 音频结构相同但名单名不同 "
                     f"→ 二者之一错配(同音频, 应做名字级修正而非换视频)")
@@ -83,15 +86,17 @@ def main():
 
     n_ok = sum(1 for v in status.values() if v[0] == "OK")
     n_mm = sum(1 for v in status.values() if v[0] == "MISMATCH")
+    n_fx = sum(1 for v in status.values() if v[0] == "FIXED")
     n_sp = sum(1 for v in status.values() if v[0] == "SUSPECT")
     n_ck = sum(1 for v in status.values() if v[0] == "CHECK")
     n_un = len(man) - len(status)
 
     def badge(lv):
         return {"MISMATCH": '<span class="b b-mm">错配实锤</span>',
-                "SUSPECT": '<span class="b b-sp">错配嫌疑</span>',
-                "CHECK":   '<span class="b b-ck">待定</span>',
-                "OK":      '<span class="b b-ok">已验证正确</span>'}[lv]
+                "FIXED":    '<span class="b b-fx">已修正✓</span>',
+                "SUSPECT":  '<span class="b b-sp">错配嫌疑</span>',
+                "CHECK":    '<span class="b b-ck">待定</span>',
+                "OK":       '<span class="b b-ok">已验证正确</span>'}[lv]
 
     def row(code):
         name = code2name.get(code, "?")
@@ -104,17 +109,17 @@ def main():
         b = badge(lv) if lv else '<span class="b b-un">未覆盖</span>'
         spec = f'<a href="{code}_spec.png">谱</a>'
         img = ""
-        if lv in ("MISMATCH", "SUSPECT", "CHECK"):
+        if lv in ("MISMATCH", "FIXED", "SUSPECT", "CHECK"):
             u = thumb_uri(code)
             if u:
                 img = f'<a href="{code}_spec.png"><img src="{u}" style="max-width:420px;width:100%;border:1px solid #ddd;border-radius:4px;display:block;margin-top:4px" alt="{code}"></a>'
         return (f'<tr><td class="mono">{code}</td><td>{html.escape(name)}</td>'
                 f'<td>{b}</td><td class="note">{note_html}{img}</td><td>{spec}</td></tr>')
 
-    # 排序: 实锤 > 嫌疑 > 待定 > 已验证 > 未覆盖, 组内按code
+    # 排序: 实锤 > 已修正 > 嫌疑 > 待定 > 已验证 > 未覆盖, 组内按code
     def sortkey(code):
         lv = status.get(code, (None,))[0]
-        order = {"MISMATCH": 0, "SUSPECT": 1, "CHECK": 2, "OK": 3}.get(lv, 4)
+        order = {"MISMATCH": 0, "FIXED": 1, "SUSPECT": 2, "CHECK": 3, "OK": 4}.get(lv, 5)
         return (order, code)
     ordered = sorted([m["code"] for m in man], key=sortkey)
 
@@ -137,7 +142,7 @@ h1{{font-size:22px}} h2{{font-size:17px;margin-top:32px;border-left:4px solid #4
 .b{{padding:2px 10px;border-radius:10px;font-size:12px;white-space:nowrap}}
 .b-mm{{background:#d93025;color:#fff}} .b-sp{{background:#e8710a;color:#fff}}
 .b-ck{{background:#f9ab00;color:#222}} .b-ok{{background:#188038;color:#fff}}
-.b-un{{background:#dadce0;color:#555}}
+.b-fx{{background:#1a73e8;color:#fff}} .b-un{{background:#dadce0;color:#555}}
 table{{border-collapse:collapse;width:100%;background:#fff;font-size:13px}}
 td,th{{border:1px solid #e0e0e0;padding:6px 10px;text-align:left;vertical-align:top}}
 th{{background:#eef2f7;position:sticky;top:0}}
@@ -152,6 +157,7 @@ tr:hover{{background:#f8f9fb}}
 
 <div class="cards">
 <div class="card"><div class="num" style="color:#d93025">{n_mm}</div><div class="lab">错配实锤</div></div>
+<div class="card"><div class="num" style="color:#1a73e8">{n_fx}</div><div class="lab">已修正</div></div>
 <div class="card"><div class="num" style="color:#e8710a">{n_sp}</div><div class="lab">错配嫌疑</div></div>
 <div class="card"><div class="num" style="color:#f9ab00">{n_ck}</div><div class="lab">待定复核</div></div>
 <div class="card"><div class="num" style="color:#188038">{n_ok}</div><div class="lab">已验证正确</div></div>
@@ -169,9 +175,10 @@ tr:hover{{background:#f8f9fb}}
 
 <h2>③ 方法与局限</h2>
 <ul style="font-size:13px;line-height:1.8">
-<li><b>硬证据(转录)</b>: 用 2midi4lin 同款 AMT-APC 模型把音频转成 MIDI 再对照原曲调性/旋律, 仅对高价值单曲执行(ARM CPU 每首约 4.7 分钟)。</li>
-<li><b>聚类互验</b>: 全部 526 首提取 转调不变结构指纹(12半音×24时间段), 两两比对; 同音频不同名 = 互换型错配。</li>
-<li><b>副本互验</b>: 同一首歌上传了多个副本(如 One last kiss ×4), 副本间谱面结构必须一致, 不一致者必有错配。</li>
+<li><b>硬证据(转录)</b>: 用 2midi4lin 同款 AMT-APC 模型把音频转成 MIDI 再对照原曲调性/织体, 对高价值单曲执行。</li>
+<li><b>细指纹聚类</b>: 全部 526 首提取 转调不变指纹(12半音×96时间段), 两两比对。基准: 同音频=1.000, 随机对=0.83~0.87; ≥0.99 采信, 0.96~0.985 为低音区等风格相似假阳性带(已逐对读谱排除)。</li>
+<li><b>副本互验</b>: 同一首歌上传了多个副本(如 One last kiss ×4), 副本间谱面结构应一致; 字节级复核确认 9 对"同音频"均为同一 MIDI 的两次独立渲染(文件大小各异)。</li>
+<li><b>修正方式</b>: 同音频不同名的错配无法靠换视频修复(两边是同一段音频), 采用名字级修正(rename_entries.py), 改名前自动备份 injected_songs.json。</li>
 <li><b>局限</b>: 无副本且非名曲的孤立歌曲无法仅凭音频判定名字对错(无参考答案), 计入"未覆盖"。这些可继续用 proofread.html 人工听校。</li>
 </ul>
 </div></body></html>"""
@@ -179,7 +186,7 @@ tr:hover{{background:#f8f9fb}}
     outp = os.path.join(OUT, "AI_report.html")
     open(outp, "w", encoding="utf-8").write(page)
     print("report ->", outp)
-    print(f"stats: MISMATCH={n_mm} SUSPECT={n_sp} CHECK={n_ck} OK={n_ok} UNCOVERED={n_un} / total={len(man)}")
+    print(f"stats: MISMATCH={n_mm} FIXED={n_fx} SUSPECT={n_sp} CHECK={n_ck} OK={n_ok} UNCOVERED={n_un} / total={len(man)}")
     print(f"cluster pairs: conflict={len(conflict_pairs)} dup_ok={len(dup_ok_pairs)} (total>{0.55}: {len(clusters)})")
 
 if __name__ == "__main__":

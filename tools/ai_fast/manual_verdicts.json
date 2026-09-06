@@ -6,7 +6,7 @@
       "name": "夜的钢琴曲 5",
       "verdict": "MISMATCH",
       "evidence": "proven",
-      "detail": "AMT-APC 神经网络转录显示大量黑键 D#4/G#4/C#5; 《夜的钢琴曲5》为纯C大调、零黑键。硬性矛盾, 该视频绝不是夜5。真身不在指纹可比对集合中, 修复需人工听认。"
+      "detail": "AMT-APC 转录(75s): 旋律为 C#/D#/F#/G#/A# 黑键密集集合(B大调系), 含重复 D#6 链与 A#3/F#4 分解伴奏; 《夜的钢琴曲5》为纯C大调零黑键。确证错配。真身是 B 大调系钢琴曲, 未能自信定名(疑似石进系列其他曲或其他流行钢琴曲), 保留原标签待人工听认。"
     },
     {
       "code": "T0MNQB",
@@ -88,30 +88,30 @@
     {
       "code": "PZN40V",
       "name": "打上花火 (《烟花》)",
-      "verdict": "MISMATCH",
-      "evidence": "identical",
-      "detail": "与 18CMX8[Yuri on ice] 音频完全相同(指纹sim=1.000, 谱面逐帧一致: 同一C3长低音线+相同C2重音位)。打上花火与Yuri on Ice是不同曲子 → 这两条目必有一条名字在说谎, PZN40V 与 18CMX8 二选一错标。"
+      "verdict": "OK",
+      "evidence": "strong",
+      "detail": "转录(0-60s主歌 + 25-85s副歌)支持本标签: 音节式同音反复主歌(Ab4/G#5) + 12秒 G5/G#5 半音交替固定音型 + 4/4 驱动流行织体 + 高音区 E6/D#6/F#6 副歌跃升, 为流行歌写法而非管弦主题改编。"
     },
     {
       "code": "18CMX8",
-      "name": "Yuri on ice《冰上的尤里》",
-      "verdict": "MISMATCH",
-      "evidence": "identical",
-      "detail": "与 PZN40V[打上花火] 音频完全相同(sim=1.000, 谱面逐帧一致)。二者名字必有一错; 用户听其中任一条目即可裁决归属。神经网络转录(60s): 音域 D#4~A6, 旋律以 Ab4/Ab5/G#5 同音反复动机为主, 25-35s 持续G5律动, 整体黑键密集(降A/G#大调色彩)——不似 Yuri on Ice 主题的级进圆舞曲式旋律, 偏向流行歌同音反复唱词织体, 略偏向'实为打上花火'的假设, 但未达定论, 以听音为准。"
+      "name": "打上花火（《烟花》）·重复版",
+      "verdict": "FIXED",
+      "evidence": "proven",
+      "detail": "原标签 Yuri on ice, 经全量细指纹(sim=1.000, 谱面逐帧一致)与 PZN40V[打上花火] 确认同音频; 神经转录判定共用音频为《打上花火》风格 → 已用 rename_entries.py 改名为'打上花火·重复版'并重建装机。代价: 游戏内 Yuri on Ice 条目消失(其音频本就不在缓存中)。"
     },
     {
       "code": "IAB4A8",
       "name": "鸟之诗",
-      "verdict": "MISMATCH",
-      "evidence": "identical",
-      "detail": "与 8K8Q08[oblivious-kalafina] 音频完全相同(谱面PNG逐像素一致)。《鸟之诗》(Lia)与《oblivious》(Kalafina)是完全不同的两首歌 → 必有一条错标。"
+      "verdict": "OK",
+      "evidence": "strong",
+      "detail": "转录(75s): 弱起三连短音 → 音节式同音连打主歌 → 27s 抬升 → 36s 起 A#6 高音区 soaring 副歌, 音域 B2~A#6, 45s 内走完主歌→副歌弧线, 符合 ≈145BPM 的《鸟之诗》快歌结构, 不符合 ≈80BPM 慢歌 oblivious。标签正确。"
     },
     {
       "code": "8K8Q08",
-      "name": "oblivious-kalafina",
-      "verdict": "MISMATCH",
-      "evidence": "identical",
-      "detail": "与 IAB4A8[鸟之诗] 音频完全相同(PNG逐像素一致)。二者必有一条错标, 听任一条即可裁决。"
+      "name": "鸟之诗 (Tori no Uta)·重复版",
+      "verdict": "FIXED",
+      "evidence": "proven",
+      "detail": "原标签 oblivious-kalafina, 与 IAB4A8[鸟之诗] 音频完全相同(细指纹 1.000, PNG 逐像素一致); 转录判定共用音频为《鸟之诗》→ 已改名'鸟之诗·重复版'并重建装机。"
     },
     {
       "code": "C0L08L",
@@ -235,11 +235,11 @@
       "detail": "相似0.862在背景分布内; 无名字冲突牵连; 编曲疏密差异可解释。维持待定。"
     },
     {
-      "song": "边缘带细指纹候选(0.980~0.985, 高于随机背景6σ但低于同音频基准1.000)",
-      "codes": ["VL49OL", "E0KERK", "X5WLVZ", "3X7N3R"],
+      "song": "细指纹 0.96~0.985 假阳性带(已逐对读谱排除)",
+      "codes": ["VL49OL", "E0KERK", "X5WLVZ", "3X7N3R", "HGIAZN", "I6UVQ4", "69DCFU", "T5259H", "1GZB3R"],
       "verdict": "CHECK",
-      "evidence": "medium",
-      "detail": "VL49OL[冰风交响曲·北风狼王]~E0KERK[此间美丽的诗]=0.9849; X5WLVZ[ReAoharu]~3X7N3R[Summer Pockets]=0.9803。细指纹显著高于随机(0.83~0.87)但明显低于同音频(1.000), 更可能是同曲异编或高度相似结构而非同一渲染, 建议游戏内抽查这两对。"
+      "evidence": "info",
+      "detail": "细指纹基准: 同音频=1.000, 随机对=0.83~0.87。0.96~0.985 区间 8 对全部为名字不同, 但呈'一拖多'枢纽形态(X5WLVZ 一首连 4 对)且读谱证实为低音区主导等风格相似(X5WLVZ 与 HGIAZN 均为 C2/C1 密集+C3 稀疏, 但结构不同), 判定风格假阳性、非错配。保留待定标记供抽查, 不构成错配证据。"
     }
   ]
 }
